@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["ITitle"] = "Início";
+}
+
+<div class="home_page flex-fill d-flex flex-column gap-4 p-4 align-items-center">
+    <div class="d-flex flex-column gap-4 bg-white shadow-sm p-4">
+        <h1>DocspiderTest</h1>
+        <p>Desenvolvimento de um sistema para armazenamento de documentos com suporte a múltiplos usuários, utilizando:</p>
+        <ul class="d-flex flex-column gap-2">
+            <li>ASP.NET Core</li>
+            <li>Razor</li>
+            <li>EntitiyFramework</li>
+            <li>PostgreSql</li>
+        </ul>
+        <div class="d-flex gap-4">
+            <a asp-controller="Document" class="btn btn-primary text-white">Experimentar</a>
+            <a href="#" class="btn btn-primary text-white" data-toggle="modal" data-target="#aboutModal">Sobre</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,53 @@
+﻿@model Core.Application.Users.Dtos.Patches.UserDto
+@{
+    ViewData["ITitle"] = "Register";
+    Layout = "_AuthLayout";
+}
+
+<form asp-action="Register" method="post" class="bg-white shadow-sm p-3 d-flex flex-column gap-4 w-20r">
+    <h1 class="title text-center">Registrar</h1>
+    <label>
+        Nome
+        @Html.TextBox(
+            nameof(Model.Name),
+            Model.Name,
+            null,
+            new {@class = "form-control"}
+             )
+        <span asp-validation-for="Name" class="error"></span>
+    </label>
+    <label>
+        Email
+        @Html.TextBox(
+            nameof(Model.Email),
+            Model.Email,
+            null,
+            new {@class = "form-control"}
+             )
+        <span asp-validation-for="Email" class="error"></span>
+    </label>
+    <label>
+        Senha
+        @Html.TextBox(
+            nameof(Model.Password),
+            Model.Password,
+            null,
+            new {@class = "form-control", type = "password"}
+             )
+        <span asp-validation-for="Password" class="error"></span>
+    </label>
+    <label>
+        Confirmar senha
+        @Html.TextBox(
+            nameof(Model.ConfirmPassword),
+            Model.ConfirmPassword,
+            null,
+            new {@class = "form-control", type = "password"}
+             )
+        <span asp-validation-for="ConfirmPassword" class="error"></span>
+    </label>
+    <button type="submit" class="btn btn-primary flex-fill">Registrar!</button>
+    <div class="text-right">
+        <a asp-controller="Auth" asp-action="Login">Retornar para o login</a>
+    </div>
+</form>

@@ -1,0 +1,78 @@
+﻿@model Core.Application.Documents.Dtos.Patches.DocumentDto
+@{
+    ViewData["ITitle"] = "Editar documento";
+}
+
+<form asp-controller="Document" asp-action="Editor" method="post" class="d-flex flex-column gap-4 p-4" enctype="multipart/form-data">
+    <div class="breadcrumb">
+        <a asp-controller="Home" class="breadcrumb-item">Início</a>
+        <a asp-action="Index" class="breadcrumb-item">Meus documentos</a>
+        <a class="breadcrumb-item">@(Model.Id == 0 ? "Novo" : "Editar")</a>
+    </div>
+    <div class="d-flex justify-content-between align-items-center">
+        <h1 class="title">@(Model.Id == 0 ? "Novo documento" : "Editar documento")</h1>
+        <div class="d-flex gap-4">
+            @if (Model.Id != 0) {
+                <a href="#" onclick="deleteDocument(@Model.Id)" class="btn btn-danger text-white">Excluir</a>
+            }
+            <button type="submit" class="btn btn-primary text-white">Salvar</button>
+        </div>
+    </div>
+    @Html.HiddenFor(x => x.Id, Model.Id)
+    @Html.HiddenFor(x => x.Archive.Id, Model.Archive.Id)
+    <label>
+        Título
+        @Html.TextBox(
+            nameof(Model.Title),
+            Model.Title,
+            null,
+            new {@class = "form-control"}
+             )
+        <span asp-validation-for="Title" class="error"></span>
+    </label>
+    <label>
+        Descrição
+        @Html.TextArea(
+            nameof(Model.Description),
+            Model.Description,
+            new {@class = "form-control"}
+             )
+        <span asp-validation-for="Description" class="error"></span>
+    </label>
+    <label>
+        Nome do arquivo
+        @Html.TextBox(
+            "Archive.Name",
+            Model.Archive.Name,
+            null,
+            new {@class = "form-control"}
+             )
+        <span asp-validation-for="Archive.Name" class="error"></span>
+    </label>
+    <div class="d-flex gap-4 align-items-center">
+        <label class="flex-fill">
+            Arquivo
+            @Html.TextBox(
+                "Archive.File",
+                Model.Archive.File,
+                null,
+                new {@class = "form-control-file", type = "file"}
+                 )
+            @if (Model.Id != 0) {
+                <span>*Ao enviar um novo arquivo, o antigo será substituído</span>
+            }
+            <span asp-validation-for="Archive.File" class="error"></span>
+        </label>
+        @if (Model.Archive.Id != 0) {
+            <a href="@Model.Archive.Url" download>Download</a>
+        }
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+    function deleteDocument(id) {
+        fetch('/Document/Delete/'+id).then(() => location.reload());
+    }
+    </script>
+}

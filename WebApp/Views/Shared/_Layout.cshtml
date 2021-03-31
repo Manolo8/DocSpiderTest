@@ -1,0 +1,77 @@
+﻿@{
+    var path = Context.Request.Path.ToString();
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Docspider - @ViewData["ITitle"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="~/css/site.css"/>
+</head>
+<body>
+
+<div class="d-flex flex-column min-vh-100">
+    <div class="c_header">
+        <div class="toggle_menu">
+            <span class="icon" onclick="toggleMenu()">menu</span>
+        </div>
+        <a asp-controller="Auth" asp-action="Logout" class="icon text-white p-3 text-decoration-none">logout</a>
+    </div>
+    <div class="d-flex flex-row flex-fill">
+        <ul class="c_menu">
+            <li class="menu_item @(path == "/" ? "selected" : "")">
+                <a class="menu_link" asp-controller="Home" asp-action="Index">
+                    <span>Início @path</span>
+                    <span class="icon">home</span>
+                </a>
+            </li>
+            <li class="menu_item @(path.StartsWith("/Document") ? "selected" : "")">
+                <a class="menu_link" asp-controller="Document" asp-action="Index">
+                    <span>Meus documentos</span>
+                    <span class="icon">folder</span>
+                </a>
+            </li>
+            <li class="menu_item">
+                <a class="menu_link" href="#" data-toggle="modal" data-target="#aboutModal">
+                    <span>Sobre</span>
+                    <span class="icon">priority_high</span>
+                </a>
+            </li>
+        </ul>
+        <div class="flex-fill d-flex flex-column max-width-100 overflow-x-hidden">
+            @RenderBody()
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content about_modal">
+            <div class="about_header text-center d-flex gap-4 flex-column">
+                <h1 class="title">DocspiderTest</h1>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="block_item">
+                <div class="item icon">cloud</div>
+                <div class="item icon">https</div>
+                <div class="item icon">bolt</div>
+            </div>
+            <div class="about_body text-center">
+                Versão do sistema: 1.0
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+@RenderSection("Scripts", required: false)
+</body>
+</html>

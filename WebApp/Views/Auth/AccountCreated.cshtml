@@ -1,0 +1,12 @@
+﻿@{
+    ViewBag.Title = "title";
+    Layout = "_AuthLayout";
+}
+
+<div class="d-flex flex-column gap-4">
+    <h1 class="title text-center">Sucesso</h1>
+    <div>
+        Sua conta foi criada!
+        <a asp-controller="Auth" asp-action="Login">Clique aqui para efetuar login!</a>
+    </div>
+</div>

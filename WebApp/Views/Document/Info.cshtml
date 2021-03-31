@@ -1,0 +1,32 @@
+﻿@model Core.Application.Documents.Dtos.Plain.DocumentToViewListDto
+@{
+    ViewData["ITitle"] = "Informações do documento";
+}
+
+<div class="d-flex flex-column gap-4 p-4 max-width" enctype="multipart/form-data">
+    <div class="breadcrumb">
+        <a asp-controller="Home" class="breadcrumb-item">Início</a>
+        <a asp-action="Index" class="breadcrumb-item">Meus documentos</a>
+        <a class="breadcrumb-item">Informações</a>
+    </div>
+    <div class="d-flex flex-column bg-white shadow-sm p-4 gap-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <h1 class="title">@Model.Title</h1>
+            <a href="#" onclick="deleteDocument(@Model.Id)" class="btn btn-danger text-white">Excluir</a>
+        </div>
+        <p class="font-weight-bold">Criação</p>
+        <p>@Model.CreateDate</p>
+        <p class="font-weight-bold">Descrição</p>
+        <p>@Model.Description</p>
+        <p class="font-weight-bold">Arquivo</p>
+        <a href="@Model.ArchiveUrl" download>@Model.ArchiveName</a>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+    function deleteDocument(id) {
+        fetch('/Document/Delete/'+id).then(() => location.reload());
+    }
+    </script>
+}

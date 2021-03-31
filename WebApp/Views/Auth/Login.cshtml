@@ -1,0 +1,34 @@
+﻿@model Core.Application.Users.Dtos.Plain.UserCredentialsDto
+@{
+    ViewData["ITitle"] = "Login";
+    Layout = "_AuthLayout";
+}
+
+<form asp-action="Login" class="bg-white shadow-sm p-3 d-flex flex-column gap-4 w-20r">
+    <h1 class="title text-center">E-mail</h1>
+    <label>
+        Email
+        @Html.TextBox(
+            nameof(Model.Email),
+            Model.Email,
+            null,
+            new {@class = "form-control"}
+             )
+        <span asp-validation-for="Email" class="error"></span>
+    </label>
+    <label>
+        Senha
+        @Html.TextBox(
+            nameof(Model.Password),
+            Model.Password,
+            null,
+            new {@class = "form-control", type = "password"}
+             )
+        <span asp-validation-for="Password" class="error"></span>
+    </label>
+    <button class="btn btn-primary flex-fill">Login</button>
+    <div class="text-right">
+        Não possui uma conta?
+        <a asp-controller="Auth" asp-action="Register">Crie uma!</a>
+    </div>
+</form>

@@ -1,0 +1,7 @@
+﻿/WebApp/bin/Debug/netcoreapp3.1/
+/WebApp/obj/
+/Shared/obj/
+/Shared/bin/Debug/netcoreapp3.1/
+/.idea/.idea.DocSpiderTest/.idea/
+/.vs/DocSpiderTest/
+/Core/bin/Debug/netcoreapp3.1/

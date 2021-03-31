@@ -1,0 +1,69 @@
+﻿@using DocSpiderTest.Helpers
+@model (Core.Application.Documents.Dtos.Filters.DocumentFilterDto filter, Shared.Utils.Filters.FilterResult<Core.Application.Documents.Dtos.Plain.DocumentToViewListDto> result)
+@{
+    ViewData["ITitle"] = "Documentos";
+}
+
+<div class="d-flex flex-column gap-4 p-4 max-width">
+    <div class="breadcrumb">
+        <a asp-controller="Home" class="breadcrumb-item">Início</a>
+        <a class="breadcrumb-item">Meus documentos</a>
+    </div>
+    <div class="d-flex justify-content-between align-items-center">
+        <h1 class="title">Documentos</h1>
+        <a asp-action="Editor" class="btn btn-primary text-white">Novo</a>
+    </div>
+    <form asp-action="Index" method="get" class="d-flex align-items-center gap-4">
+        @Html.TextBox(
+            nameof(Model.filter.Title),
+            Model.filter.Title,
+            null,
+            new {@class = "form-control bg-transparent", placeholder = "Procurar por título"}
+             )
+    </form>
+    <table class="styled_table">
+        <thead>
+        <tr>
+            <th class="shrink">Título</th>
+            <th class="grow">Descrição</th>
+            <th class="shrink">Nome do arquivo</th>
+            <th class="shrink">Data de criação</th>
+            <th class="shrink"></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var document in Model.result.Items) {
+            <tr>
+                <td class="shrink max-w-12r" data-title="Título">
+                    <a asp-action="Info" asp-route-id="@document.Id" class="text-black">@document.Title</a>
+                </td>
+                <td class="grow" data-title="Descrição">@document.Description</td>
+                <td class="shrink" data-title="Nome do arquivo">@document.ArchiveName</td>
+                <td class="shrink" data-title="Data de criação">@document.CreateDate</td>
+                <td class="shrink" data-title="Ações">
+                    <div class="d-flex gap-4">
+                        <a asp-action="Info" asp-route-id="@document.Id" class="icon">priority_high</a>
+                        <a asp-action="Editor" asp-route-id="@document.Id" class="icon">edit</a>
+                        <a href="@document.ArchiveUrl" class="icon" download>download</a>
+                        <a href="#" onclick="deleteDocument(@document.Id)" class="icon">delete</a>
+                    </div>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    <div class="navigation">
+        <span>Página @Model.filter.Page de @((Model.result.Total / Model.filter.Size) + 1)</span>
+        <span>@Model.result.Total ite@(Model.result.Total > 1 ? "ns" : "m")</span>
+        <a href="@Url.Current(new {Page = Math.Max(1, Model.filter.Page - 1)})" class="icon">navigate_before</a>
+        <a href="@Url.Current(new {Page = Model.filter.Page + 1})" class="icon">navigate_next</a>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+    function deleteDocument(id) {
+        fetch('/Document/Delete/'+id).then(() => location.reload());
+    }
+    </script>
+}
